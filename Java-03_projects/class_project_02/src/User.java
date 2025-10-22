@@ -8,18 +8,17 @@ public class User {
     boolean isVip;
 
     public User(
-        String name,
-        String email,
-        String password,
-        String role,
-        int age,
-        int id,
-        int pin,
-        int accountNumber,
-        float money,
-        float loan,
-        boolean isVip
-    ) {
+            String name,
+            String email,
+            String password,
+            String role,
+            int age,
+            int id,
+            int pin,
+            int accountNumber,
+            float money,
+            float loan,
+            boolean isVip) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -70,11 +69,10 @@ public class User {
         if (add_currency > 0) {
             this.money += add_currency;
             System.out.println(
-                "Deposit successful. Added $" +
-                    add_currency +
-                    " to account " +
-                    this.accountNumber
-            );
+                    "Deposit successful. Added $" +
+                            add_currency +
+                            " to account " +
+                            this.accountNumber);
         } else {
             System.out.println("Deposit failed. Amount must be positive.");
         }
@@ -86,38 +84,33 @@ public class User {
         } else if (this.money >= withdraw_currency) {
             this.money -= withdraw_currency;
             System.out.println(
-                "Withdrawal successful. Remaining balance: $" + this.money
-            );
+                    "Withdrawal successful. Remaining balance: $" + this.money);
         } else {
             System.out.println(
-                "Withdrawal failed. Insufficient funds (Current balance: $" +
-                    this.money +
-                    ")"
-            );
+                    "Withdrawal failed. Insufficient funds (Current balance: $" +
+                            this.money +
+                            ")");
         }
     }
 
     public void checkBalance() {
         System.out.println(
-            "Current Balance for " +
-                this.name +
-                " (Account #" +
-                this.accountNumber +
-                "): $" +
-                this.money
-        );
+                "Current Balance for " +
+                        this.name +
+                        " (Account #" +
+                        this.accountNumber +
+                        "): $" +
+                        this.money);
     }
 
     public void updateInfo(
-        String newName,
-        String newEmail,
-        int newAge,
-        String newPlainPassword,
-        int newPin
-    ) {
+            String newName,
+            String newEmail,
+            int newAge,
+            String newPlainPassword,
+            int newPin) {
         System.out.println(
-            "User information update initiated for ID: " + this.id
-        );
+                "User information update initiated for ID: " + this.id);
         boolean changed = false;
 
         if (newName != null && !newName.trim().isEmpty()) {
@@ -147,8 +140,7 @@ public class User {
 
         if (changed) {
             System.out.println(
-                "User information updated successfully. Changes must be saved to file separately to persist."
-            );
+                    "User information updated successfully. Changes must be saved to file separately to persist.");
         } else {
             System.out.println("No new information provided to update.");
         }
@@ -157,29 +149,27 @@ public class User {
     public String toString() {
         String encodedPass = this.encodePassword();
 
-        return (
-            name +
-            "," +
-            email +
-            "," +
-            encodedPass +
-            "," +
-            role +
-            "," +
-            age +
-            "," +
-            id +
-            "," +
-            pin +
-            "," +
-            accountNumber +
-            "," +
-            money +
-            "," +
-            loan +
-            "," +
-            isVip
-        );
+        return (name +
+                "," +
+                email +
+                "," +
+                encodedPass +
+                "," +
+                role +
+                "," +
+                age +
+                "," +
+                id +
+                "," +
+                pin +
+                "," +
+                accountNumber +
+                "," +
+                money +
+                "," +
+                loan +
+                "," +
+                isVip);
     }
 
     public String encodePassword() {
@@ -207,9 +197,8 @@ public class User {
                 decoded.append((char) asciiValue);
             } catch (NumberFormatException e) {
                 System.err.println(
-                    "Error decoding password part (invalid number format): " +
-                        part
-                );
+                        "Error decoding password part (invalid number format): " +
+                                part);
             }
         }
         return decoded.toString();
@@ -218,10 +207,9 @@ public class User {
     public void status() {
         System.out.println("\n--- User Account Status ---");
         System.out.println(
-            "Account Holder: " +
-                this.name +
-                (this.isVip ? " (VIP Customer)" : "")
-        );
+                "Account Holder: " +
+                        this.name +
+                        (this.isVip ? " (VIP Customer)" : ""));
         System.out.println("Role: " + this.role);
         System.out.println("ID: " + this.id);
         System.out.println("Age: " + this.age);
