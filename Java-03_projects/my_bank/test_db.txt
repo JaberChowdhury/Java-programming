@@ -1,3 +1,0 @@
-name,id,pin,password,loan,amount
-Test User 1,t101,1111,pass1,100.0,200.0
-Test User 2,t102,2222,pass2,0.0,500.0
