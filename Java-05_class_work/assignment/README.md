@@ -1,6 +1,4 @@
-
 ---
-
 # 🧮 Java Programming Assignment
 
 #### **Course:**  Java Programming
@@ -8,8 +6,7 @@
 #### **Submitted by:** *MD JABER HOSSAIN CHOWDHURY*
 #### **ID No:** *202431070002*
 #### **Date:** *4 NOVEMBER 2025*
-#### **Instructor:** *PABON SHAHA*
-
+#### **Instructor:** *POBON SHAHA*
 ---
 
 ---
@@ -32,9 +29,11 @@ public class One {
 ```
 
 **Output:**
-``` bash
+
+```bash
 218 31 43 654 576 7896 24
 ```
+
 ---
 
 # 2. Write a program in Java to find the maximum and minimum elements in an array.
@@ -74,7 +73,8 @@ public class Two {
 ```
 
 **Output:**
-``` bash
+
+```bash
 4
 12 23 34 45
 Maximum number is 45
@@ -131,7 +131,8 @@ public class Three {
 ```
 
 **Output:**
-``` bash
+
+```bash
 4
 12 23 34 45
 Second largest element is 34
@@ -186,7 +187,8 @@ public class Four {
 ```
 
 **Output:**
-``` bash
+
+```bash
 4
 43 32 21 76
 Second smallest element is 32
@@ -222,7 +224,8 @@ public class Five {
 ```
 
 **Output:**
-``` bash
+
+```bash
 4
 45 32 76 33
 [32, 33, 45, 76]
@@ -279,7 +282,8 @@ public class Six {
 ```
 
 **Output:**
-``` java
+
+```java
 Enter row and column size (e.g. 4 6): 3 3
 Now enter the matrix:
 Enter the arr[0]th row: 12 23 34
@@ -388,7 +392,8 @@ public class Seven {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Now enter 1st matrix:
 Enter row and column size (e.g. 4 6): 2 2
 Now enter the matrix:
@@ -500,7 +505,8 @@ public class Eight {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Now enter 1st matrix:
 Enter row and column size (e.g. 4 6): 2 2
 Now enter the matrix:
@@ -602,7 +608,8 @@ public class Nine {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Now enter 1st matrix:
 Enter row and column size (e.g. 4 6): 2 2
 Now enter the matrix:
@@ -618,7 +625,6 @@ Enter the arr[1]th row: 21 34
   {1881, 2858},
 }
 ```
-
 
 ---
 
@@ -688,7 +694,8 @@ public class Ten {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Enter row and column size (e.g. 4 6): 3 3
 Now enter the matrix:
 Enter the arr[0]th row: 98 76 65
@@ -768,7 +775,8 @@ public class Eleven {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Enter row and column size (e.g. 4 6): 2 2
 Now enter the matrix:
 Enter the arr[0]th row: 12 23
@@ -843,7 +851,8 @@ public class Twelve {
 ```
 
 **Output:**
-``` bash
+
+```bash
 What is the size of the array ? 4
 Enter n number with space saparated :: 12 23 34 45
 Enter enter element and the position to add (position must be <=n+1) :: 100 3
@@ -893,7 +902,8 @@ public class Thirteen {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Enter number of elements: 4
 Enter elements:
 12 23 34 45
@@ -945,11 +955,13 @@ public class Fourteen {
 ```
 
 **Output:**
-``` bash
+
+```bash
 Enter number of elements: 7
 Enter elements:
 12 23 34 45 56 67 87
 Enter element to search: 34
 Element found at position: 3
 ```
+
 ---
