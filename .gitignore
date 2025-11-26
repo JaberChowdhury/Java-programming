@@ -1,18 +1,20 @@
-# Compiled class file
+# -------------------
+# Gradle Build Files
+# -------------------
+.gradle/
+build/
+# Ignore Gradle GUI config
+gradle-app.setting
+# Avoid ignoring the wrapper jar, but ignore local properties
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# -------------------
+# Java / Class Files
+# -------------------
 *.class
-
-# Log file
 *.log
-
-# BlueJ files
 *.ctxt
-Input.txt
-Output.txt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -21,6 +23,46 @@ Output.txt
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# -------------------
+# IDE - VS Code
+# -------------------
+.vscode/
+.factorypath
+.classpath
+.project
+.settings/
+bin/
+
+# -------------------
+# IDE - IntelliJ IDEA
+# -------------------
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# -------------------
+# IDE - Eclipse
+# -------------------
+.metadata
+.recommenders
+
+# -------------------
+# OS Junk Files
+# -------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -------------------
+# Native Packaging (JPackage)
+# -------------------
+# If you create installers, they land in build/, but just in case:
+*.deb
+*.rpm
+*.msi
+*.exe
+*.pkg
+*.dmg
