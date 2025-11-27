@@ -1,11 +1,12 @@
 package io.github.jaber.starter;
 
-import atlantafx.base.theme.CupertinoDark; // <--- Change to Dark base
+import atlantafx.base.theme.CupertinoDark;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -19,15 +20,27 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        // 1. THEME: Start with a Dark Base (CupertinoDark or PrimerDark)
         Application.setUserAgentStylesheet(
             new CupertinoDark().getUserAgentStylesheet()
         );
+        TextArea text_data = new TextArea();
+        text_data.setMaxSize(400, 100);
+        text_data.setPromptText("Type something here...");
 
-        // --- VIEW SETUP ---
+        Text text_area_text = new Text("Waiting for input...");
+        text_area_text.setFill(Color.CYAN); // Make it visible
+
+        text_data
+            .textProperty()
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue.isEmpty()) {
+                    text_area_text.setText("Waiting for input...");
+                } else {
+                    text_area_text.setText("You typed: " + newValue);
+                }
+            });
+
         header = new Text("Count: 0");
-        // Changing text color to matches Gruvbox standard (cream/white)
-        // or keep your pink if you prefer.
         header.setFill(Color.web("#ebdbb2"));
         header.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
@@ -35,6 +48,7 @@ public class App extends Application {
         Button btnPlus1 = createButton("+1");
         Button btnMinus1 = createButton("-1");
         Button btnMinus5 = createButton("-5");
+
         Button reset = createButton("ZERO");
 
         HBox buttonLayout = new HBox(
@@ -47,26 +61,36 @@ public class App extends Application {
         );
         buttonLayout.setAlignment(Pos.CENTER);
 
-        // --- LOGIC SETUP ---
         btnPlus5.setOnAction(e -> updateCount(5));
         btnPlus1.setOnAction(e -> updateCount(1));
         btnMinus1.setOnAction(e -> updateCount(-1));
         btnMinus5.setOnAction(e -> updateCount(-5));
-        reset.setOnAction(e -> updateCount(count * -1));
 
-        VBox root = new VBox(20, header, buttonLayout);
+        reset.setOnAction(e -> updateCount(-count));
+
+        VBox root = new VBox(
+            20,
+            header,
+            buttonLayout,
+            text_data,
+            text_area_text
+        );
         root.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(root, 900, 600);
+        Scene scene = new Scene(root, 1920, 1080);
 
-        // 2. CSS: Load your custom Gruvbox overrides
-        // Ensure gruvbox.css is in src/main/resources/
-        String css = Objects.requireNonNull(
-            getClass().getResource("/gruvbox.css")
-        ).toExternalForm();
-        scene.getStylesheets().add(css);
+        try {
+            String css = Objects.requireNonNull(
+                getClass().getResource("/gruvbox.css")
+            ).toExternalForm();
+            scene.getStylesheets().add(css);
+        } catch (Exception e) {
+            System.out.println(
+                "Warning: gruvbox.css not found. Using default."
+            );
+        }
 
-        stage.setTitle("Gruvbox Counter");
+        stage.setTitle("Gruvbox Counter & Text Listener");
         stage.setScene(scene);
         stage.show();
     }
@@ -78,7 +102,7 @@ public class App extends Application {
 
     private Button createButton(String label) {
         Button b = new Button(label);
-        b.setPrefSize(150, 80);
+        b.setPrefSize(100, 50);
         return b;
     }
 
