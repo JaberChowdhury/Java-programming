@@ -16,3 +16,48 @@
     /* Focus ring color (when you click/tab to a button) */
     -color-accent-focus: #d65d0e80;
 }
+/* Gruvbox Palette Variables (optional, but helps organization) */
+* {
+    -color-bg: #282828;
+    -color-fg: #ebdbb2;
+    -color-yellow: #d79921;
+    -color-dark-gray: #3c3836;
+}
+
+.root {
+    -fx-background-color: -color-bg;
+    -fx-font-family:
+        "JetBrains Mono", "Consolas", monospace; /* Nerd Font friendly */
+}
+
+/* Custom Header styling */
+.header-text {
+    -fx-fill: -color-yellow;
+    -fx-font-weight: bold;
+}
+
+/* Customizing the List View to blend in */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: -color-dark-gray;
+    -fx-border-width: 2px;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-fg;
+    -fx-padding: 10px;
+}
+
+/* Define what happens when a list item is selected */
+.list-cell:filled:selected:focused,
+.list-cell:filled:selected {
+    -fx-background-color: -color-dark-gray;
+    -fx-text-fill: -color-yellow;
+}
+
+/* Even rows slightly darker for "striped" effect (Optional) */
+.list-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.02);
+}

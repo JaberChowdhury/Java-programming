@@ -1,109 +1,115 @@
 package io.github.jaber.starter;
 
 import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.Styles;
 import java.util.Objects;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private int count = 0;
-    private Text header;
+    private final ListView<String> listView = new ListView<>();
 
     @Override
     public void start(Stage stage) {
         Application.setUserAgentStylesheet(
             new CupertinoDark().getUserAgentStylesheet()
         );
-        TextArea text_data = new TextArea();
-        text_data.setMaxSize(400, 100);
-        text_data.setPromptText("Type something here...");
 
-        Text text_area_text = new Text("Waiting for input...");
-        text_area_text.setFill(Color.CYAN); // Make it visible
+        // --- 1. UI Components ---
 
-        text_data
-            .textProperty()
-            .addListener((observable, oldValue, newValue) -> {
-                if (newValue.isEmpty()) {
-                    text_area_text.setText("Waiting for input...");
-                } else {
-                    text_area_text.setText("You typed: " + newValue);
-                }
-            });
+        // Header
+        Text header = new Text("TASKS");
+        header.getStyleClass().addAll(Styles.TITLE_2, "header-text");
 
-        header = new Text("Count: 0");
-        header.setFill(Color.web("#ebdbb2"));
-        header.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        // Input Field
+        TextField inputField = new TextField();
+        inputField.setPromptText("What needs to be done?");
+        // Allow the text field to grow horizontally
+        HBox.setHgrow(inputField, Priority.ALWAYS);
 
-        Button btnPlus5 = createButton("+5");
-        Button btnPlus1 = createButton("+1");
-        Button btnMinus1 = createButton("-1");
-        Button btnMinus5 = createButton("-5");
+        // Add Button
+        Button addButton = new Button("Add");
+        addButton.getStyleClass().add(Styles.ACCENT); // AtlantaFX style: Blue/Accent color
+        addButton.setDefaultButton(true); // Pressing 'Enter' triggers this
 
-        Button reset = createButton("ZERO");
+        // Input Container (Field + Button)
+        HBox inputBox = new HBox(10, inputField, addButton);
+        inputBox.setAlignment(Pos.CENTER_LEFT);
 
-        HBox buttonLayout = new HBox(
-            20,
-            btnPlus5,
-            btnPlus1,
-            reset,
-            btnMinus1,
-            btnMinus5
-        );
-        buttonLayout.setAlignment(Pos.CENTER);
+        // Task List
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        VBox.setVgrow(listView, Priority.ALWAYS); // Fill available vertical space
 
-        btnPlus5.setOnAction(e -> updateCount(5));
-        btnPlus1.setOnAction(e -> updateCount(1));
-        btnMinus1.setOnAction(e -> updateCount(-1));
-        btnMinus5.setOnAction(e -> updateCount(-5));
+        // Bottom Action Buttons
+        Button deleteBtn = new Button("Delete Selected");
+        deleteBtn.getStyleClass().add(Styles.DANGER); // AtlantaFX style: Red/Danger color
 
-        reset.setOnAction(e -> updateCount(-count));
+        Button printBtn = new Button("Print All");
+        printBtn.getStyleClass().add(Styles.SUCCESS); // AtlantaFX style: Green/Success color
 
-        VBox root = new VBox(
-            20,
-            header,
-            buttonLayout,
-            text_data,
-            text_area_text
-        );
-        root.setAlignment(Pos.CENTER);
+        HBox actionBox = new HBox(10, deleteBtn, printBtn);
+        actionBox.setAlignment(Pos.CENTER);
 
+        // --- 2. Logic/Events ---
+
+        addButton.setOnAction(e -> {
+            String text = inputField.getText();
+            if (text != null && !text.isBlank()) {
+                listView.getItems().add(text);
+                inputField.clear();
+            }
+        });
+
+        deleteBtn.setOnAction(e -> {
+            int selectedIdx = listView.getSelectionModel().getSelectedIndex();
+            if (selectedIdx != -1) {
+                listView.getItems().remove(selectedIdx);
+            }
+        });
+
+        printBtn.setOnAction(e -> {
+            System.out.println("--- Current Todo List ---");
+            listView.getItems().forEach(System.out::println);
+            System.out.println("-------------------------");
+        });
+
+        // --- 3. Layout Assembly ---
+
+        VBox root = new VBox(20, header, inputBox, listView, actionBox);
+        root.setPadding(new Insets(30)); // Add breathing room around the edges
+        root.setAlignment(Pos.TOP_CENTER);
+        root.getStyleClass().add("app-root"); // Hook for CSS
+
+        // Use a smaller window size for a "Minimalist" feel
         Scene scene = new Scene(root, 1920, 1080);
+        loadCss(scene);
 
+        stage.setTitle("Minimal Todo");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void loadCss(Scene scene) {
         try {
             String css = Objects.requireNonNull(
                 getClass().getResource("/gruvbox.css")
             ).toExternalForm();
             scene.getStylesheets().add(css);
         } catch (Exception e) {
-            System.out.println(
-                "Warning: gruvbox.css not found. Using default."
-            );
+            System.err.println("CSS not found.");
         }
-
-        stage.setTitle("Gruvbox Counter & Text Listener");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void updateCount(int change) {
-        count += change;
-        header.setText("Count: " + count);
-    }
-
-    private Button createButton(String label) {
-        Button b = new Button(label);
-        b.setPrefSize(100, 50);
-        return b;
     }
 
     public static void main(String[] args) {
