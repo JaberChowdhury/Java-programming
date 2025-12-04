@@ -1,4 +1,0 @@
-name,id,pin,password,loan,amount,role
-Alice Smith (Admin),1001,1234,pass123,0.0,5000.75,ADMIN
-Bob Johnson,1002,4321,pass456,1500.0,550.25,USER
-Jaber,1343,987623,pass3245789,0.0,1.234E7,USER
