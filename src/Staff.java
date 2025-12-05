@@ -1,12 +1,9 @@
 package src;
 
-import java.util.Scanner;
-
 public class Staff extends User {
 
     private String department;
     private String shift;
-    private Scanner scan;
 
     Staff(
         String id,
@@ -15,34 +12,22 @@ public class Staff extends User {
         String username,
         Integer age,
         Float height,
-        String password,
-        Scanner scan
+        String password
     ) {
-        super(id, name, role, username, age, height, password, scan);
-        this.scan = scan;
-
+        super(id, name, role, username, age, height, password);
         this.department = "General";
         this.shift = "Day";
     }
 
-    public String getDepartment() {
-        return department;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public void setDepartment() {
-        System.out.print("Enter Department :: ");
-        this.department = scan.next();
+    public void setShift(String shift) {
+        this.shift = shift;
     }
 
-    public String getShift() {
-        return shift;
-    }
-
-    public void setShift() {
-        System.out.print("Enter Shift (Day/Night) :: ");
-        this.shift = scan.next();
-    }
-
+    @Override
     public void printInfo() {
         super.print();
         System.out.println("--- Staff Details ---");

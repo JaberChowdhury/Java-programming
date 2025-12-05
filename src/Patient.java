@@ -1,7 +1,5 @@
 package src;
 
-import java.util.Scanner;
-
 enum EmergencyLevel {
     Serious,
     Major,
@@ -14,7 +12,6 @@ public class Patient extends User {
     private boolean isReleased;
     private String releaseDate;
     private String admittedDate;
-    private Scanner scan;
 
     Patient(
         String id,
@@ -23,70 +20,34 @@ public class Patient extends User {
         String username,
         Integer age,
         Float height,
-        String password,
-        Scanner scan
+        String password
     ) {
-        super(id, name, role, username, age, height, password, scan);
-        this.scan = scan;
-
+        super(id, name, role, username, age, height, password);
         this.emergencyLevel = EmergencyLevel.Simple;
         this.isReleased = false;
         this.admittedDate = "Pending";
         this.releaseDate = "N/A";
     }
 
-    public EmergencyLevel getEmergencyLevel() {
-        return emergencyLevel;
+    public void setEmergencyLevel(EmergencyLevel level) {
+        this.emergencyLevel = level;
     }
 
-    public void setEmergencyLevel() {
-        System.out.println(
-            "Select Emergency Level (Serious, Major, Simple) :: "
-        );
-        String input = scan.next();
-        try {
-            this.emergencyLevel = EmergencyLevel.valueOf(input);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid level! Defaulting to Simple.");
-            this.emergencyLevel = EmergencyLevel.Simple;
-        }
+    public void setIsReleased(boolean released) {
+        this.isReleased = released;
     }
 
-    public boolean getIsReleased() {
-        return isReleased;
+    public void setReleaseDate(String date) {
+        this.releaseDate = date;
     }
 
-    public void setIsReleased() {
-        System.out.print("Is the patient released? (true/false) :: ");
-        if (scan.hasNextBoolean()) {
-            this.isReleased = scan.nextBoolean();
-        } else {
-            System.out.println("Invalid input! Enter true or false.");
-            scan.next();
-        }
+    public void setAdmittedDate(String date) {
+        this.admittedDate = date;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate() {
-        System.out.print("Enter Release Date (e.g., 2025-12-01) :: ");
-        this.releaseDate = scan.next();
-    }
-
-    public String getAdmittedDate() {
-        return admittedDate;
-    }
-
-    public void setAdmittedDate() {
-        System.out.print("Enter Admitted Date (e.g., 2025-11-20) :: ");
-        this.admittedDate = scan.next();
-    }
-
+    @Override
     public void printInfo() {
         super.print();
-
         System.out.println("--- Patient Details ---");
         System.out.println("Emergency Level: " + emergencyLevel);
         System.out.println("Admitted Date: " + admittedDate);

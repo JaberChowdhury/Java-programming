@@ -1,7 +1,5 @@
 package src;
 
-import java.util.Scanner;
-
 enum RankLevel {
     Senior,
     Junior,
@@ -13,7 +11,6 @@ public class Doctor extends User {
     private RankLevel rank;
     private String specialization;
     private int experiencedYear;
-    private Scanner scan;
 
     Doctor(
         String id,
@@ -22,55 +19,27 @@ public class Doctor extends User {
         String username,
         Integer age,
         Float height,
-        String password,
-        Scanner scan
+        String password
     ) {
-        super(id, name, role, username, age, height, password, scan);
-        this.scan = scan;
-
+        super(id, name, role, username, age, height, password);
         this.rank = RankLevel.Intern;
         this.specialization = "General";
         this.experiencedYear = 0;
     }
 
-    public RankLevel getRank() {
-        return rank;
+    public void setRank(RankLevel rank) {
+        this.rank = rank;
     }
 
-    public void setRank() {
-        System.out.println("Select Rank (Senior, Junior, Intern) :: ");
-        String input = scan.next();
-        try {
-            this.rank = RankLevel.valueOf(input);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid rank! Defaulting to Intern.");
-            this.rank = RankLevel.Intern;
-        }
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
-    public String getSpecialization() {
-        return specialization;
+    public void setExperiencedYear(int year) {
+        this.experiencedYear = year;
     }
 
-    public void setSpecialization() {
-        System.out.print("Enter Specialization :: ");
-        this.specialization = scan.next();
-    }
-
-    public int getExperiencedYear() {
-        return experiencedYear;
-    }
-
-    public void setExperiencedYear() {
-        System.out.print("Enter Years of Experience :: ");
-        if (scan.hasNextInt()) {
-            this.experiencedYear = scan.nextInt();
-        } else {
-            System.out.println("Invalid number!");
-            scan.next();
-        }
-    }
-
+    @Override
     public void printInfo() {
         super.print();
         System.out.println("--- Doctor Details ---");

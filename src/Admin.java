@@ -1,11 +1,8 @@
 package src;
 
-import java.util.Scanner;
-
 public class Admin extends User {
 
     private String permissions;
-    private Scanner scan;
 
     Admin(
         String id,
@@ -14,28 +11,17 @@ public class Admin extends User {
         String username,
         Integer age,
         Float height,
-        String password,
-        Scanner scan
+        String password
     ) {
-        super(id, name, role, username, age, height, password, scan);
-        this.scan = scan;
-
+        super(id, name, role, username, age, height, password);
         this.permissions = "Read-Only";
     }
 
-    public String getPermissions() {
-        return permissions;
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 
-    public void setPermissions() {
-        System.out.print("Enter Permissions (e.g., Full-Access) :: ");
-        this.permissions = scan.next();
-    }
-
-    public void manageUsers() {
-        System.out.println("Admin " + getName() + " is now managing users...");
-    }
-
+    @Override
     public void printInfo() {
         super.print();
         System.out.println("--- Admin Details ---");
