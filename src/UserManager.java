@@ -31,7 +31,7 @@ public class UserManager {
         }
 
         System.out.print("Enter Name: ");
-        String name = scan.next();
+        String name = scan.nextLine();
         System.out.print("Enter Username: ");
         String username = scan.next();
         System.out.print("Enter Password: ");
