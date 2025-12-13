@@ -5,11 +5,5 @@
 ## How to run the project ?
 
 ```bash
-git clone https://github.com/JaberChowdhury/Java-programming.git
-```
-
-> checkout to specific branch
-
-```bash
-gradle run
+javac -d bin -sourcepath src src/App.java && java -cp bin App
 ```
