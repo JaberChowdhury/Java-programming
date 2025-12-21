@@ -1,4 +1,5 @@
 import games.NumberGuessingGame;
+import games.WordGuessingGame;
 import java.util.Scanner;
 import utils.Logger;
 
@@ -38,7 +39,7 @@ public class App {
                 NumberGuessingGame.start();
                 break;
             case 2:
-                Logger.print("coming soon....");
+                WordGuessingGame.start();
                 break;
             case 3:
                 Logger.print("coming soon....");
