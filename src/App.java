@@ -1,3 +1,5 @@
+import games.MemoryGame;
+import games.MysteryHuntGame;
 import games.NumberGuessingGame;
 import games.WordGuessingGame;
 import java.util.Scanner;
@@ -42,7 +44,7 @@ public class App {
                 WordGuessingGame.start();
                 break;
             case 3:
-                Logger.print("coming soon....");
+                new MemoryGame().start();
                 break;
             case 4:
                 Logger.print("coming soon....");
@@ -51,7 +53,7 @@ public class App {
                 Logger.print("coming soon....");
                 break;
             case 6:
-                Logger.print("coming soon....");
+                new MysteryHuntGame().start();
                 break;
             case 7:
                 Logger.print("coming soon....");

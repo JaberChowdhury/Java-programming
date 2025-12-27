@@ -10,6 +10,14 @@ public class Logger {
         System.out.print(msg);
     }
 
+    public static void p(char msg) {
+        System.out.print(msg);
+    }
+
+    public static void p(int msg) {
+        System.out.print(msg);
+    }
+
     public static void printCenter(String text, int lineWidth) {
         int padding = (lineWidth - text.length()) / 2;
         if (padding < 0) {
