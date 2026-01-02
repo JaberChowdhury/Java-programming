@@ -1,6 +1,12 @@
+import games.LudoSnakeGame;
 import games.MemoryGame;
 import games.MysteryHuntGame;
 import games.NumberGuessingGame;
+import games.QuizGame;
+import games.RockPaperScissorsGame;
+import games.SudokuGame;
+import games.TicTacToeGame;
+import games.TruthAndDareGame;
 import games.WordGuessingGame;
 import java.util.Scanner;
 import utils.Logger;
@@ -16,7 +22,8 @@ public class App {
         "Mestry Hunt Game",
         "Truth Dare Game",
         "Sudoku",
-        "Ludo Snake Game",
+        "Quiz game",
+        // "Ludo Snake Game",
     };
 
     public static void main(String[] args) {
@@ -24,7 +31,7 @@ public class App {
         int selected = 0;
         while (!(selected >= 1 && selected <= 9)) {
             Logger.clear();
-            Logger.printCenter("hi", 50);
+            Logger.printCenter("GameFusion", 50);
             Logger.print("Choose a game to play");
             int i = 1;
             for (String game : games) {
@@ -47,22 +54,22 @@ public class App {
                 new MemoryGame().start();
                 break;
             case 4:
-                Logger.print("coming soon....");
+                new TicTacToeGame().start();
                 break;
             case 5:
-                Logger.print("coming soon....");
+                new RockPaperScissorsGame().start();
                 break;
             case 6:
                 new MysteryHuntGame().start();
                 break;
             case 7:
-                Logger.print("coming soon....");
+                new TruthAndDareGame().start();
                 break;
             case 8:
-                Logger.print("coming soon....");
+                SudokuGame.start();
                 break;
             case 9:
-                Logger.print("coming soon....");
+                QuizGame.start();
                 break;
             default:
                 Logger.print("How did you do this ??");

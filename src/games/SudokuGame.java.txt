@@ -1,0 +1,241 @@
+package games;
+
+import java.util.Random;
+import java.util.Scanner;
+import utils.Logger;
+
+public class SudokuGame {
+
+    private char[][] board;
+    private char[][] solutionBoard;
+    private boolean[][] isFixed;
+    private final int N = 9;
+    private final int K = 20;
+
+    public SudokuGame() {
+        board = new char[N][N];
+        solutionBoard = new char[N][N];
+        isFixed = new boolean[N][N];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                board[i][j] = '.';
+            }
+        }
+
+        createPuzzle();
+    }
+
+    private void createPuzzle() {
+        fillDiagonal();
+
+        solveSudoku(this.board);
+
+        for (int i = 0; i < N; i++) {
+            System.arraycopy(board[i], 0, solutionBoard[i], 0, N);
+        }
+
+        removeDigits();
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] != '.') {
+                    isFixed[i][j] = true;
+                }
+            }
+        }
+    }
+
+    private void fillDiagonal() {
+        for (int i = 0; i < N; i = i + 3) {
+            fillBox(i, i);
+        }
+    }
+
+    private void fillBox(int row, int col) {
+        int num;
+        Random rand = new Random();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                do {
+                    num = rand.nextInt(9) + 1;
+                } while (!isSafeInBox(row, col, num));
+                board[row + i][col + j] = (char) (num + '0');
+            }
+        }
+    }
+
+    private boolean isSafeInBox(int rowStart, int colStart, int num) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[rowStart + i][colStart + j] == (char) (num + '0')) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void removeDigits() {
+        int count = K;
+        Random rand = new Random();
+        while (count != 0) {
+            int cellId = rand.nextInt(N * N);
+            int i = cellId / N;
+            int j = cellId % 9;
+            if (board[i][j] != '.') {
+                count--;
+                board[i][j] = '.';
+            }
+        }
+    }
+
+    private boolean isSafe(char[][] board, int row, int col, int number) {
+        for (int i = 0; i < N; i++) {
+            if (board[i][col] == (char) (number + '0')) return false;
+            if (board[row][i] == (char) (number + '0')) return false;
+        }
+
+        int sr = 3 * (row / 3);
+        int sc = 3 * (col / 3);
+        for (int i = sr; i < sr + 3; i++) {
+            for (int j = sc; j < sc + 3; j++) {
+                if (board[i][j] == (char) (number + '0')) return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean solveHelper(char[][] board, int row, int col) {
+        if (row == N) return true;
+
+        int nrow, ncol;
+        if (col == N - 1) {
+            nrow = row + 1;
+            ncol = 0;
+        } else {
+            nrow = row;
+            ncol = col + 1;
+        }
+
+        if (board[row][col] != '.') {
+            return solveHelper(board, nrow, ncol);
+        } else {
+            for (int i = 1; i <= 9; i++) {
+                if (isSafe(board, row, col, i)) {
+                    board[row][col] = (char) (i + '0');
+                    if (solveHelper(board, nrow, ncol)) return true;
+                    board[row][col] = '.';
+                }
+            }
+        }
+        return false;
+    }
+
+    private void solveSudoku(char[][] board) {
+        solveHelper(board, 0, 0);
+    }
+
+    private void printBoard() {
+        Logger.print("    1 2 3   4 5 6   7 8 9");
+        Logger.print("  +-------+-------+-------+");
+        for (int i = 0; i < N; i++) {
+            Logger.p((i + 1) + " | ");
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] == '.') {
+                    Logger.p(". ");
+                } else {
+                    Logger.p(board[i][j] + " ");
+                }
+                if ((j + 1) % 3 == 0) Logger.p("| ");
+            }
+            Logger.print("");
+            if ((i + 1) % 3 == 0) Logger.print("  +-------+-------+-------+");
+        }
+    }
+
+    private int getValidInput(Scanner scan, String prompt, int max) {
+        while (true) {
+            Logger.p(prompt);
+            if (scan.hasNextInt()) {
+                int val = scan.nextInt();
+                if (val >= 0 && val <= max) return val;
+            } else {
+                scan.next();
+            }
+            Logger.print("Invalid input.");
+        }
+    }
+
+    public void start() {
+        Scanner scan = new Scanner(System.in);
+        boolean playing = true;
+
+        while (playing) {
+            Logger.clear();
+            Logger.printCenter("SUDOKU", 30);
+            printBoard();
+            Logger.print("\nInstructions:");
+            Logger.print("- Enter Row (1-9), Column (1-9), and Number (1-9).");
+            Logger.print("- Enter '0' as Row to give up and see solution.");
+            Logger.print("- Enter '0' as Number to clear a cell.");
+
+            int row = getValidInput(scan, "\nRow (0 to Solve): ", 9);
+            if (row == 0) {
+                Logger.clear();
+                Logger.print("Here is the solution:");
+                board = solutionBoard;
+                printBoard();
+                Logger.print("\nPress Enter to exit...");
+                try {
+                    System.in.read();
+                } catch (Exception e) {}
+                break;
+            }
+
+            int col = getValidInput(scan, "Column: ", 9);
+            int num = getValidInput(scan, "Number (0-9): ", 9);
+
+            int rIndex = row - 1;
+            int cIndex = col - 1;
+
+            if (isFixed[rIndex][cIndex]) {
+                Logger.print("!!! You cannot change a fixed clue! !!!");
+                try {
+                    Thread.sleep(1500);
+                } catch (Exception e) {}
+            } else {
+                if (num == 0) {
+                    board[rIndex][cIndex] = '.';
+                } else {
+                    if (isSafe(board, rIndex, cIndex, num)) {
+                        board[rIndex][cIndex] = (char) (num + '0');
+                    } else {
+                        Logger.print(
+                            "!!! Invalid Move! That number conflicts. !!!"
+                        );
+                        try {
+                            Thread.sleep(1500);
+                        } catch (Exception e) {}
+                    }
+                }
+            }
+
+            boolean full = true;
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) if (board[i][j] == '.') full =
+                    false;
+            }
+
+            if (full) {
+                Logger.clear();
+                printBoard();
+                Logger.print("CONGRATULATIONS! You solved the Sudoku!");
+                playing = false;
+                try {
+                    System.in.read();
+                } catch (Exception e) {}
+            }
+        }
+    }
+}
