@@ -67,6 +67,7 @@ public class NumberGuessingGame {
         }
 
         printSummary(gameHistory, totalCorrect);
+        scan.close();
     }
 
     private static void printSummary(
